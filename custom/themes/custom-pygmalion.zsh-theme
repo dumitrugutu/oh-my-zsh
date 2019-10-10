@@ -2,13 +2,13 @@
 
 prompt_setup_pygmalion(){
   ZSH_THEME_GIT_PROMPT_PREFIX="%{$reset_color%}%{$fg[red]%}"
-  ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%} "
+  ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}"
   #ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[red]%}⚡%{$reset_color%}"
   ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[red]%}*%{$reset_color%}"
   ZSH_THEME_GIT_PROMPT_CLEAN=""
 
-  base_prompt='%{$fg[red]%}%n%{$reset_color%}%{$fg[magenta] %}%{$reset_color%}%{$fg[white]%}%0~%{$reset_color%}%{$fg[red]%} %{$reset_color%}'
-  post_prompt='%{$fg[white]%}\$ '
+  base_prompt='%{$fg[red]%}%m::%{$reset_color%}%{$fg[magenta] %}%{$reset_color%}%{$fg[white]%}[%~]%{$reset_color%}%{$fg[red]%} %{$reset_color%}'
+  post_prompt='%{$fg[white]%}-> %# '
 
   base_prompt_nocolor=$(echo "$base_prompt" | perl -pe "s/%\{[^}]+\}//g")
   post_prompt_nocolor=$(echo "$post_prompt" | perl -pe "s/%\{[^}]+\}//g")
@@ -24,13 +24,13 @@ prompt_pygmalion_precmd(){
 
   local nl=""
 
-  if [[ $prompt_length -gt 40 ]]; then
+  if [[ $prompt_length -gt 80 ]]; then
     nl=$'\n%{\r%}';
   fi
 
   local git_branch_length=${#gitinfo}
   if [[ $git_branch_length -gt 0 ]]; then
-    local gitinfo="%{$fg[red]%}[ $gitinfo%{$fg[red]%}] "
+    local gitinfo="%{$fg[red]%}[$gitinfo%{$fg[red]%}] "
   fi
   PROMPT="$base_prompt$gitinfo$nl$post_prompt"
 }
